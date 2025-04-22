@@ -2,7 +2,12 @@ import streamlit as st
 import joblib
 import pandas as pd
 import numpy as np
+import os
 
+
+# Debugging: Show current directory contents
+st.write("Current directory:", os.getcwd())
+st.write("Files in directory:", os.listdir())
 # Load model and scaler with error handling
 try:
     model = joblib.load('insurance_cost_model.pkl')
