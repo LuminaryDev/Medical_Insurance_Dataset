@@ -31,8 +31,14 @@ region_encoded = {
     "Southwest": [0, 0, 1]
 }[region]
 
-# Scale numerical features (age, bmi, children)
-scaled_features = scaler.transform([[age, bmi, children]])
+# --- Critical Fix Start ---
+# Create DataFrame with column names for scaling
+input_df = pd.DataFrame(
+    [[age, bmi, children]],
+    columns=['age', 'bmi', 'children']  # Must match scaler's feature names
+)
+scaled_features = scaler.transform(input_df)
+# --- Critical Fix End ---
 
 # Create feature array
 features = np.array([
@@ -46,5 +52,8 @@ features = np.array([
 
 # Predict button
 if st.button("Predict Insurance Cost"):
-    prediction = model.predict(features)[0]
-    st.success(f"Predicted Insurance Cost: **${prediction:,.2f}**")
+    try:
+        prediction = model.predict(features)[0]
+        st.success(f"Predicted Insurance Cost: **${prediction:,.2f}**")
+    except Exception as e:
+        st.error(f"Error in prediction: {str(e)}")
