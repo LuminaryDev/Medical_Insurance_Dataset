@@ -10,12 +10,11 @@ st.write("Current directory:", os.getcwd())
 st.write("Files in directory:", os.listdir())
 # Load model and scaler with error handling
 try:
-    model = joblib.load('insurance_cost_model.pkl')
-    scaler = joblib.load('scaler.pkl')
+    model_path = os.path.join(os.getcwd(), "models/model.h5")
+    st.write("Model path:", model_path)
+    # Load your model here
 except Exception as e:
-    st.error(f"Error loading model: {str(e)}")
-    st.stop()
-
+    st.error(f"Model loading failed: {str(e)}")
 # Title and inputs
 st.title("Medical Insurance Cost Predictor 🏥")
 
